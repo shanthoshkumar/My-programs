@@ -1,0 +1,40 @@
+pragma solidity ^0.4.0;
+contract solidity
+{
+    function totalSupply()public returns(uint256);
+}
+contract tokens is solidity
+{
+    uint256 public totalsupply=10000;
+    mapping(address=>uint256)balkey;
+    mapping(address=>mapping(address=>uint))secondwoner;
+    function totalSupply()public  returns(uint256)
+    {
+        balkey[msg.sender]=totalsupply;
+        return  balkey[msg.sender];
+
+    }
+    function Transfer(address to,uint256 transamount)returns(uint256)
+    {
+      require(balkey[msg.sender]>transamount);
+        balkey[msg.sender]-=transamount;
+        balkey[to]+=transamount;
+        return balkey[msg.sender];
+    }
+    function BalanceOf(address a)returns(uint256)
+    {
+         return balkey[a];
+    }
+    function Approve(address add,uint256 secondAmount)returns(bool)
+    {
+        secondwoner[add][msg.sender]=secondAmount;
+        balkey[msg.sender]-=secondAmount;
+        return true;
+    }
+    function TransferFrom(address from,address to,uint256 amt) returns(uint256)
+    {
+        secondwoner[from][msg.sender]-=amt;
+        balkey[to]+=amt;
+        return secondwoner[from][msg.sender];
+    }
+}
