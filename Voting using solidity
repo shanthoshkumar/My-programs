@@ -1,0 +1,61 @@
+pragma solidity ^0.4.0;
+contract abc
+{
+    struct A
+    {
+        string Candidate_Name;
+    }
+    uint256 index=0;
+    uint256 []candidate;
+    uint256 Can1count;
+    uint256 Can2count;
+    uint256 Can3count;
+    mapping(uint256=>A)mapkey;
+    function CandidateRegistration(string n)public 
+    {
+        mapkey[index].Candidate_Name=n;
+        candidate.push(index);
+        index++;
+    }
+    function Candidate_Name_List(uint256 i)public constant returns(string)
+    {
+        return mapkey[i].Candidate_Name;
+    }
+    function Candidate_Id_Details()public constant returns(uint256[])
+    {
+        return candidate;
+    }
+    function Vote(uint256 idno)public
+    {
+        uint256 i;
+            if(candidate[i]==idno)
+            {
+                Can1count++;
+            }
+            else if(candidate[i+1]==idno)
+            {
+                Can2count++;
+            }
+            else  if(candidate[i+2]==idno)
+            {
+                Can3count++;
+            }
+    
+    }
+    function Result()public constant returns(string)
+    {
+        if(Can1count>Can2count&&Can1count>Can3count)
+        {
+            return  mapkey[0].Candidate_Name;
+        }
+        else if(Can2count>Can1count&&Can2count>Can3count)
+        {
+            return    mapkey[1].Candidate_Name;
+        }
+        else
+        {
+            return mapkey[2].Candidate_Name;
+        }
+    }
+
+}
