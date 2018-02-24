@@ -1,0 +1,54 @@
+pragma solidity ^0.4.0;
+contract  c
+{
+    struct s
+    {
+        uint256 Candidate_Id;
+        string Candidate_Name;
+    }
+    mapping(uint256=>s)mapkey;
+    uint256 Candidate01;
+    uint256 Candidate02;
+    uint256 Candidate03;
+     function Insert()public
+    {
+        mapkey[1].Candidate_Name="Java ji";
+        mapkey[2].Candidate_Name="Basha Baii";
+        mapkey[3].Candidate_Name="Thalapathy";
+     }
+      function Vote(uint256 index)public
+   {
+     if(index==1)
+          {
+            Candidate01++;
+          }
+   else  if(index==2)
+         {
+            Candidate02++;
+         }
+   else if(index==3)
+         {
+            Candidate03++;
+          }
+        else
+         {
+          return;
+         }
+    }
+       function Result()public constant returns(string)
+    {
+        if(Candidate01>Candidate02&&Candidate01>Candidate03)
+        {
+            return " Podu => Candidate01 Balaji is the Winner";
+        }
+        else if(Candidate02>Candidate01&&Candidate02>Candidate03)
+        {
+            return " Podu => Candidate02 Basha is the Winner";
+        }
+        else if(Candidate03>Candidate02&&Candidate03>Candidate01)
+        {
+            return " Podu => Candidate03 Sri Ram is the Winner";
+        }
+    }
+    
+}
