@@ -1,0 +1,60 @@
+pragma solidity ^0.4.0;
+contract solidity
+{
+    struct abc
+    {
+        uint256 Book_id;
+        string Book_name;
+        uint256 Book_count;
+        uint256  student_Book_count;
+        uint256 Individual_count;
+    }
+         uint256 Individual_Books_count;
+         uint256 sum;
+mapping(uint=>abc)mapkey;
+mapping(uint=>mapping(uint=>abc))Mainkey;
+    function Books_Registration(uint256 bookindex,uint256 bookid,string bookname,uint256 bookcount)public
+    {
+        mapkey[bookindex].Book_id=bookid;
+        mapkey[bookindex].Book_name=bookname;
+        mapkey[bookindex].Book_count=bookcount;
+        Individual_Books_count+=mapkey[bookindex].Book_count;
+        mapkey[bookindex].Individual_count=mapkey[bookindex].Book_count;
+        sum+= mapkey[bookindex].Individual_count;
+    }
+    modifier check(uint256 studentid,uint256 studentbookid,uint256 bookindex)
+      {
+          require(Mainkey[studentid][studentbookid].Book_id!=mapkey[bookindex].Book_id);
+          _;
+      }
+    function Book_Issue(uint256 studentid,uint256 studentbookid,uint256 bookindex)public check(studentid,studentbookid,bookindex)
+    {
+        Mainkey[studentid][studentbookid].Book_id=mapkey[bookindex].Book_id;
+        Mainkey[studentid][studentbookid].student_Book_count++;
+        mapkey[bookindex].Book_count--;
+    }
+    function Book_returns(uint256 studentid,uint256 studentbookid,uint256 bookindex)public
+    {
+        Mainkey[studentid][studentbookid].student_Book_count--;
+        mapkey[bookindex].Book_count++;
+        {
+          require(mapkey[bookindex].Book_count<=mapkey[bookindex].Individual_count);
+        }
+        if(Mainkey[studentid][studentbookid].student_Book_count==0)
+        Mainkey[studentid][studentbookid].Book_id=0;
+    }
+    function Student_Details(uint256 studentid,uint256 studentbookid)public constant returns (uint256 )
+    {
+        return (Mainkey[studentid][studentbookid].student_Book_count);
+    }
+    function Individual_Book_Details(uint256 bookindex)public constant returns(uint256 id,string name, uint256 count)
+    {
+         id=mapkey[bookindex].Book_id;
+         name= mapkey[bookindex].Book_name;
+         count= mapkey[bookindex].Book_count;
+    }
+    function Total_Books()public constant returns(uint256)
+    {
+        return sum;
+    }
+}
