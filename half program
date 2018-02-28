@@ -1,0 +1,49 @@
+pragma solidity ^0.4.0;
+contract Hello
+{
+    struct abc
+    {
+        uint256 Product_id;
+        string Product_Name;
+        uint256 Product_Price_Per_Unit;
+        uint256 Product_Quantity;
+        uint256 customers_product_count;
+        string customers_product_Name;
+        
+    }
+    mapping(uint=>abc)mapkey;
+    mapping(uint=>mapping(uint=>abc))key;
+
+function Stocking(uint256 productindex,uint256 pid,string pname,uint256 PPricePerunit,uint256 pquantity) public
+{
+   mapkey[productindex].Product_id=pid;
+   mapkey[productindex].Product_Name=pname;
+   mapkey[productindex].Product_Price_Per_Unit=PPricePerunit;
+   mapkey[productindex].Product_Quantity=pquantity;
+}
+function Purchase(uint256 customerid,uint256 customersproductid,uint256 productindex)public
+{
+    key[customerid][customersproductid].Product_id=mapkey[productindex].Product_id;
+    key[customerid][customersproductid].customers_product_Name=mapkey[productindex].Product_Name;
+    key[customerid][customersproductid].customers_product_count++;
+     mapkey[productindex].Product_Quantity--;
+    
+}
+function Customers_Purchase(uint256 customerid,uint256 customersproductid)public constant returns(string,uint256 )
+{
+  return (key[customerid][customersproductid].customers_product_Name,key[customerid][customersproductid].customers_product_count);
+}
+function Total_price(uint256 customerid,uint256 customersproductid,uint256 productindex)public constant returns(string,uint256,uint256)
+{
+    return (
+    key[customerid][customersproductid].customers_product_Name,
+    key[customerid][customersproductid].customers_product_count,
+    mapkey[productindex].Product_Price_Per_Unit*key[customerid][customersproductid].customers_product_count);
+    
+}
+function Stocked_Product(uint256 productindex)public constant returns(string,uint256)
+{
+    return (mapkey[productindex].Product_Name,mapkey[productindex].Product_Quantity);
+}
+
+}
