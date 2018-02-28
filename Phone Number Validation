@@ -1,0 +1,21 @@
+pragma solidity ^0.4.0;
+contract Helloo
+{
+  
+     function Sri_Ram_Prasad(uint256 Phonenumber)public constant returns(string)
+{
+      uint256 Digit_count;
+    uint n=Phonenumber;
+    while(n!=0)
+    {
+      Digit_count++;
+      n=n/10;
+    }
+    if(Digit_count==10)
+  return "Valid Phone number";
+  else
+  return "Invalid Phone number";
+
+}
+
+  }
