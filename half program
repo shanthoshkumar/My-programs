@@ -11,7 +11,9 @@ contract Hello
         string customers_product_Name;
         
     }
-    mapping(uint=>abc)mapkey;
+    uint256 Purchasing_Time;
+    uint256 Closing_Time;
+     mapping(uint=>abc)mapkey;
     mapping(uint=>mapping(uint=>abc))key;
 
 function Stocking(uint256 productindex,uint256 pid,string pname,uint256 PPricePerunit,uint256 pquantity) public
@@ -21,29 +23,27 @@ function Stocking(uint256 productindex,uint256 pid,string pname,uint256 PPricePe
    mapkey[productindex].Product_Price_Per_Unit=PPricePerunit;
    mapkey[productindex].Product_Quantity=pquantity;
 }
-function Purchase(uint256 customerid,uint256 customersproductid,uint256 productindex)public
+function Customers_Purchase(uint256 customerid,uint256 customersproductid,uint256 productindex)public
 {
+    Purchasing_Time=now;
     key[customerid][customersproductid].Product_id=mapkey[productindex].Product_id;
     key[customerid][customersproductid].customers_product_Name=mapkey[productindex].Product_Name;
     key[customerid][customersproductid].customers_product_count++;
      mapkey[productindex].Product_Quantity--;
     
 }
-function Customers_Purchase(uint256 customerid,uint256 customersproductid)public constant returns(string,uint256 )
+function Purchase_Details(uint256 customerid,uint256 customersproductid,uint256 productindex)public constant returns(string,uint256,uint256)
 {
-  return (key[customerid][customersproductid].customers_product_Name,key[customerid][customersproductid].customers_product_count);
-}
-function Total_price(uint256 customerid,uint256 customersproductid,uint256 productindex)public constant returns(string,uint256,uint256)
-{
-    return (
-    key[customerid][customersproductid].customers_product_Name,
-    key[customerid][customersproductid].customers_product_count,
-    mapkey[productindex].Product_Price_Per_Unit*key[customerid][customersproductid].customers_product_count);
-    
+  return (key[customerid][customersproductid].customers_product_Name,
+  key[customerid][customersproductid].customers_product_count,
+  mapkey[productindex].Product_Price_Per_Unit*key[customerid][customersproductid].customers_product_count);
 }
 function Stocked_Product(uint256 productindex)public constant returns(string,uint256)
 {
     return (mapkey[productindex].Product_Name,mapkey[productindex].Product_Quantity);
 }
-
+/*function Timing()public constant returns(uint)
+{
+ return 
+}*/
 }
