@@ -1,0 +1,41 @@
+pragma solidity ^0.4.0;
+contract Bank
+{
+    struct abc
+    {
+        uint256 Balance;    
+    }
+    address owner;
+    mapping(address=>abc)mapkey;
+    mapping(address=>mapping(address=>abc))key;
+     modifier Ownership()
+    {
+       require(owner==msg.sender); 
+       _;
+    }
+    function Bank()public
+    {
+        owner=msg.sender;
+    }
+    function Deposit(address new_ownerad,uint256 deposit_amount)public Ownership()
+    {
+        mapkey[new_ownerad].Balance=deposit_amount;
+    }
+    function Transfer(address to,uint256 trans_amount)public
+    {
+        mapkey[msg.sender].Balance-=trans_amount;
+        mapkey[to].Balance+=trans_amount;
+    }
+    function View_balance(address ad)public constant returns(uint256)
+    {
+        return mapkey[ad].Balance;
+    }
+    function Withdraw(uint256 with_amount)public 
+    {
+        mapkey[msg.sender].Balance-=with_amount;
+    }
+    function Ownership_Transfer(address new_owner)public Ownership()
+    {
+        owner=new_owner;
+    }
+}
