@@ -39,3 +39,270 @@ contract Bank
         owner=new_owner;
     }
 }
+
+                                    HTML code for Dapp Bank:-
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    
+  </head>
+  <body>
+
+<div>
+<h1>Deposit</h1>
+<table>
+<tr><input id="address" type="text" /></tr>
+<tr><input id="deposit_amount" type="text" /></tr>
+<tr><button id="d_click" onclick="deposit();">Deposit</button></tr>
+</table>
+</div>
+
+<div>
+<h1>Transfer<h1>
+<table>
+<tr><input id="to_address" type="text" /></tr>
+<tr><input id="trans_amount" type="text" /></tr>
+<tr><button id="t_click" onclick="transfer();">Transfer</button></tr>
+</table>
+</div>
+
+<div>
+<h1>View_Balance</h1>
+<table>
+<tr><input id="address" type="text" /></tr>
+<tr><button id="b_click" onclick="balance();">View_Balance</button></tr>
+</table>
+</div>
+
+<div>
+<table>
+<tr><h1>Withdraw</h1>
+<tr><input id="with_amount" type="text" />
+<tr><button id="w_click" onclick="withdraw();">Withdraw</button>
+</div>
+
+<div>
+<table>
+<tr><h1>Ownership_Transfer</h1></tr>
+<tr><input id="owner_address" type="text" /></tr>
+<tr><button id="o_click" onclick="ownership();">Ownership</button></tr>
+</table>
+</div>
+
+</body>
+<script>
+   
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        var sybexcon = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "with_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "Withdraw",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "trans_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "ad",
+				"type": "address"
+			}
+		],
+		"name": "View_balance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "new_ownerad",
+				"type": "address"
+			},
+			{
+				"name": "deposit_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "Deposit",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "new_owner",
+				"type": "address"
+			}
+		],
+		"name": "Ownership_Transfer",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+]);
+        var sybex = sybexcon.at('0xc5941eeb0a655e0dcb09762dfd71c8bf5701252d');
+
+     if(web3.isConnected()) 
+	{
+  
+        console.log("Ok");
+  	   }
+	 else 
+	{
+	console.log("no");
+   	  }
+      web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is mainnet')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        });
+
+function deposit()
+ {
+var ownadd=document.getElementById('address');
+var amt=document.getElementById('deposit_amount');
+return sybex.Deposit(ownadd.value,amt.value,function(error,result)
+{
+   if(!error) 
+	{
+            alert("Successful:"+result);	
+
+	}
+else
+	{
+	alert("ERROR");
+	}
+});
+}
+
+function transfer() 
+{
+var toadd=document.getElementById('to_address');
+var amt=document.getElementById('trans_amount');
+return sybex.Transfer(toadd.value,amt.value,function(error,result)
+{
+	 if(!error) 
+	{
+            		alert(result);	
+	}
+	else
+	{
+		alert("ERROR");
+	}
+});
+}
+
+function balance()
+{
+	var add=document.getElementById('address');
+	return sybex.View_balance(add.value,function(error,result)
+	{
+	  if(!error) 
+	{
+            		alert(result);	
+	}
+	else
+	{
+		alert("ERROR");
+	}
+	});
+}
+
+function withdraw()
+{
+var withadd=document.getElementById('with_amount');
+return sybex.Withdraw(withadd.value,function(error,result)
+{
+	  if(!error) 
+	{
+            		alert(result);	
+	}
+	else
+	{
+		alert("ERROR");
+	}
+});
+}
+
+function ownership()
+{
+var ownadd=document.getElementById('owner_address');
+return sybex. Ownership_Transfer(ownadd.value,function(error,result)
+{
+  if(!error) 
+	{
+            alert(result);	
+	}
+else
+	{
+	alert("ERROR");
+	}
+});
+}
+</script>
+</html>
+
