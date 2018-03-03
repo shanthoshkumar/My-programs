@@ -1,18 +1,22 @@
-pragma solidity ^0.4.0;
-contract Tokens 
+                                    Solidity COde
+                                    pragma solidity ^0.4.0;
+contract Test
 {
-    string name;
-    uint256 decimal;
-    string symbol;
+ function totalSupply(uint256 _totalsupply)public returns(uint256);
+ function Transfer(address to,uint256 transamount)public returns(uint256,uint256);
+ function BalanceOf(address a)public constant returns(uint256);
+ function Approve(address spender,uint256 spendersamount)public returns(string);
+ function Allowance(address spender)public constant returns(uint256);
+ function TransferFrom(address spender,address to,uint256 amount)public returns(uint256);
+ }
+contract Tokens is Test
+{
     mapping(address=>uint256)key_1;
     mapping(address=>mapping(address=>uint))key_2;
-    function totalSupply(uint256 _totalsupply,string _name,uint256 _decimal,string _symbol)public returns(uint256,string,uint256,string)
+    function totalSupply(uint256 _totalsupply)public returns(uint256)
     {
         key_1[msg.sender]=_totalsupply;
-        name=_name;
-        decimal=_decimal;
-        symbol=_symbol;
-        return (key_1[msg.sender],name,decimal,symbol);
+        return key_1[msg.sender];
     }
     function Transfer(address to,uint256 transamount)public returns(uint256,uint256)
     {
@@ -44,3 +48,370 @@ contract Tokens
         return key_2[msg.sender][spender];
     }
 }
+
+                        Html code
+                        
+                        
+                        <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    
+  </head>
+<marquee><h1>**************Sri_Ram_Bank_Wallet*****************<h1></marquee>
+<body bgcolor="white red">
+<div>
+<h1>Total_Supply</h1>
+<table >
+<tr><input id="supply" placeholder="Enter total supply" type="text" /></tr>
+<tr><button id="ts_click" onclick="totalsupply();">Supply</button></tr>
+</table>
+</div>
+
+<div>
+<h1>Transfer<h1>
+<table>
+<tr><input id="to_address" placeholder="Enter to address" type="text" /></tr>
+<tr><input id="trans_amount"placeholder="Enter amount to transfer" type="text" /></tr>
+<tr><button id="t_click" onclick="transfer();">Transfer</button></tr>
+</table>
+</div>
+
+<div>
+<h1>Balance</h1>
+<table>
+<tr><input id="address" placeholder="Enter address" type="text" /></tr>
+<tr><button id="b_click" onclick="balance();">Balance</button></tr>
+</table>
+</div>
+
+<div>
+<table>
+<tr><h1>Approve</h1>
+<tr><input id="spenderaddress" placeholder="Enter spender address"  type="text" />
+<tr><input id="spenderamount" placeholder="Enter amount" type="text" />
+<tr><button id="w_click" onclick="approve();">Approve</button>
+</div>
+
+<div>
+<table>
+<tr><h1>Allowance</h1></tr>
+<tr><input id="spender_address" placeholder="Enter spender address"  type="text" /></tr>
+<tr><button id="o_click" onclick="allowance();">Allowance</button></tr>
+</table>
+</div>
+
+<div>
+<table>
+<tr><h1>Transer_From</h1>
+<tr><input id="spender_address" placeholder="Enter from address"  type="text" />
+<tr><input id="to_address" placeholder="Enter to address" type="text" />
+<tr><input id="amount" placeholder="Enter amount to transfer" type="text" />
+<tr><button id="w_click" onclick="transfer_from();">Transfer</button>
+</div>
+
+</body>
+<script>
+   
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        var sybexcon = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "address"
+			}
+		],
+		"name": "BalanceOf",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "spender",
+				"type": "address"
+			}
+		],
+		"name": "Allowance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"name": "spendersamount",
+				"type": "uint256"
+			}
+		],
+		"name": "Approve",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "transamount",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "TransferFrom",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_totalsupply",
+				"type": "uint256"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_decimal",
+				"type": "uint256"
+			},
+			{
+				"name": "_symbol",
+				"type": "string"
+			}
+		],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]);
+        var sybex = sybexcon.at('0x2b5087b3e3da158b08a08b94cd7f5f14df4ae21f');
+
+     if(web3.isConnected()) 
+	{
+  
+        console.log("Ok");
+  	   }
+	 else 
+	{
+	console.log("no");
+   	  }
+      web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is mainnet')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        });
+
+function totalsupply()
+ {
+var sup=document.getElementById('supply');
+var nam=document.getElementById('name');
+var dec=document.getElementById('decimal');
+var sym=document.getElementById('symbol');
+return sybex.totalSupply(sup.value,nam.value,dec.value,sym.value,function(error,result)
+{
+   if(!error) 
+	{
+            alert("Successful:"+result);	
+
+	}
+else
+	{
+	alert("ERROR");
+	}
+});
+}
+
+function transfer() 
+{
+var toadd=document.getElementById('to_address');
+var amt=document.getElementById('trans_amount');
+return sybex.Transfer(toadd.value,amt.value,function(error,result)
+{
+	 if(!error) 
+	{
+            		alert(result);	
+	}
+	else
+	{
+		alert("ERROR");
+	}
+});
+}
+
+function balance()
+{
+	var add=document.getElementById('address');
+	return sybex.BalanceOf(add.value,function(error,result)
+	{
+	  if(!error) 
+	{
+            		alert(result);	
+	}
+	else
+	{
+		alert("ERROR");
+	}
+	});
+}
+
+function approve()
+{
+var spenadd=document.getElementById('spenderaddress');
+var spenamount=document.getElementById('spenderamount');
+return sybex.Approve(spenadd.value,spenamount.value,function(error,result)
+{
+	  if(!error) 
+	{
+            		alert(result);	
+	}
+	else
+	{
+		alert("ERROR");
+	}
+});
+}
+
+function allowance()
+{
+var spenadd=document.getElementById('spender_address');
+return sybex.Allowance(spenadd.value,function(error,result)
+{
+  if(!error) 
+	{
+            alert(result);	
+	}
+else
+	{
+	alert("ERROR");
+	}
+});
+}
+
+
+function transfer_from()
+ {
+var spenadd=document.getElementById('spender_address');
+var toadd=document.getElementById('to_address');
+var amt=document.getElementById('amount');
+return sybex.TransferFrom(spenadd.value,toadd.value,amt.value,function(error,result)
+{
+   if(!error) 
+	{
+            alert("Successful:"+result);	
+
+	}
+else
+	{
+	alert("ERROR");
+	}
+});
+}
+</script>
+</html>
