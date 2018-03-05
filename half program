@@ -1,49 +1,37 @@
-pragma solidity ^0.4.0;
-contract Hello
+pragma solidity ^0.4.0.;
+contract Nutrition 
 {
-    struct abc
+    struct Health
     {
-        uint256 Product_id;
-        string Product_Name;
-        uint256 Product_Price_Per_Unit;
-        uint256 Product_Quantity;
-        uint256 customers_product_count;
-        string customers_product_Name;
-        
+        uint256 Customerid;
+        uint256 Customersitemid;
+        uint256 CustomersTotal;
+        string Customername;
     }
-    uint256 Purchasing_Time;
-    uint256 Closing_Time;
-     mapping(uint=>abc)mapkey;
-    mapping(uint=>mapping(uint=>abc))key;
-
-function Stocking(uint256 productindex,uint256 pid,string pname,uint256 PPricePerunit,uint256 pquantity) public
-{
-   mapkey[productindex].Product_id=pid;
-   mapkey[productindex].Product_Name=pname;
-   mapkey[productindex].Product_Price_Per_Unit=PPricePerunit;
-   mapkey[productindex].Product_Quantity=pquantity;
-}
-function Customers_Purchase(uint256 customerid,uint256 customersproductid,uint256 productindex)public
-{
-    Purchasing_Time=now;
-    key[customerid][customersproductid].Product_id=mapkey[productindex].Product_id;
-    key[customerid][customersproductid].customers_product_Name=mapkey[productindex].Product_Name;
-    key[customerid][customersproductid].customers_product_count++;
-     mapkey[productindex].Product_Quantity--;
     
-}
-function Purchase_Details(uint256 customerid,uint256 customersproductid,uint256 productindex)public constant returns(string,uint256,uint256)
-{
-  return (key[customerid][customersproductid].customers_product_Name,
-  key[customerid][customersproductid].customers_product_count,
-  mapkey[productindex].Product_Price_Per_Unit*key[customerid][customersproductid].customers_product_count);
-}
-function Stocked_Product(uint256 productindex)public constant returns(string,uint256)
-{
-    return (mapkey[productindex].Product_Name,mapkey[productindex].Product_Quantity);
-}
-/*function Timing()public constant returns(uint)
-{
- return 
-}*/
+    uint256 Itemid;
+    string  []Itemname;
+    uint256 []priceper;
+    uint256 []TotalQuantity;
+    uint256 []Item_Array;
+    uint256 Total;
+    mapping(uint=>Health)key_1;
+    function Production(uint256 _itemid,string _itemname,uint256 _itemprice,uint256 _total)public
+    {
+            Item_Array.push(_itemid);
+            Itemname.push(_itemname);   
+            priceper.push(_itemprice);
+            TotalQuantity.push(_total);
+            Total=TotalQuantity.push(_total);
+    }
+    function  Food_Serve(uint256 _cid,uint256 _itemid,uint256 _total)public returns(uint256,uint256,string,uint256)
+    {   
+            key_1[_cid].Customerid=_cid;
+            key_1[_cid].Customersitemid=_itemid;
+            key_1[_cid].CustomersTotal=_total;
+            Total--;
+            Itemid++;
+        return (key_1[_cid].Customerid,key_1[_cid].Customersitemid,Itemname[Itemid],key_1[_cid].CustomersTotal*priceper[Itemid]);
+    }
+  //  function  Boarding()
 }
