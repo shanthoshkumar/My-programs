@@ -5,33 +5,49 @@ contract Nutrition
     {
         uint256 Customerid;
         uint256 Customersitemid;
-        uint256 CustomersTotal;
+        uint256 NumberofQuantity;
+        uint256 CustomersTotalBillAmount;
         string Customername;
+        uint256 ParticularProductQuantity;
     }
-    
-    uint256 Itemid;
     string  []Itemname;
     uint256 []priceper;
     uint256 []TotalQuantity;
     uint256 []Item_Array;
-    uint256 Total;
-    mapping(uint=>Health)key_1;
+    uint256 CustomersTotal;
+    mapping(uint=>Health)key;
     function Production(uint256 _itemid,string _itemname,uint256 _itemprice,uint256 _total)public
     {
             Item_Array.push(_itemid);
             Itemname.push(_itemname);   
             priceper.push(_itemprice);
-            TotalQuantity.push(_total);
-            Total=TotalQuantity.push(_total);
+            key[_itemid].ParticularProductQuantity=_total;
     }
-    function  Food_Serve(uint256 _cid,uint256 _itemid,uint256 _total)public returns(uint256,uint256,string,uint256)
+    function Items()public constant returns(uint256[])
+    {
+        return Item_Array;
+    }
+    function  Food_Serve(uint256 _cid,uint256 _itemid,uint256 _total)public returns(uint256,uint256,string)
     {   
-            key_1[_cid].Customerid=_cid;
-            key_1[_cid].Customersitemid=_itemid;
-            key_1[_cid].CustomersTotal=_total;
-            Total--;
-            Itemid++;
-        return (key_1[_cid].Customerid,key_1[_cid].Customersitemid,Itemname[Itemid],key_1[_cid].CustomersTotal*priceper[Itemid]);
+        uint256 i;
+            key[_cid].Customerid=_cid;
+            key[_cid].Customersitemid=_itemid;
+            key[_cid].NumberofQuantity=_total;
+            while(i<key[_cid].NumberofQuantity)
+            {
+            key[_itemid].ParticularProductQuantity--;
+            i++;
+            }
+            key[_cid].CustomersTotalBillAmount+=priceper[_itemid]*key[_cid].NumberofQuantity;
+            return (key[_cid].Customerid,key[_cid].Customersitemid,Itemname[_itemid]);
     }
-  //  function  Boarding()
+    function Bill(uint256 _cid,uint256 _itemid)public constant returns(uint256,string,uint256)
+    {
+        return (key[_cid].Customerid,Itemname[_itemid],key[_cid].CustomersTotalBillAmount);
+    }
+   function  View_Quantity(uint256 _itemid)public constant returns(string,uint256)
+   {
+       return (Itemname[_itemid],key[_itemid].ParticularProductQuantity);
+   } 
 }
+
