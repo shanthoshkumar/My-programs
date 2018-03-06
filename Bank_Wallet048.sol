@@ -1,4 +1,4 @@
-import "./Operation.sol";
+import "./Operation3.sol";
 pragma solidity ^0.4.0;
 contract Test
 
@@ -51,9 +51,9 @@ contract Tokens is Test
     {
         require(amount<=key_1[msg.sender]&&amount<=key_2[msg.sender][spender]);
         
-        key_1[msg.sender]-=key_1[msg.sender].sub(amount);
-        key_2[msg.sender][spender]-=key_2[msg.sender][spender].sub(amount);
-        key_1[to]+=key_1[to].add(amount);
+        key_1[msg.sender]=key_1[msg.sender].sub(amount);
+        key_2[msg.sender][spender]=key_2[msg.sender][spender].sub(amount);
+        key_1[to]=key_1[to].add(amount);
         return key_2[msg.sender][spender];
     }
 }
