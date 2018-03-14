@@ -1,0 +1,333 @@
+<html>
+<head>
+
+<meta charset="utf-8">
+
+<title>Test</title>
+
+</head>
+
+<body bgcolor="white">
+
+<marquee><h1  style="color:SpringGreen">Tokens</h1></marquee>
+
+<div  align="center">
+<h1 style="color:orangered">Mint</h1>
+                     
+<table >
+
+<tr><input id="mid"  placeholder="Enter the amount" type="text" /></tr>
+
+<tr><button id="m_click" onclick="min();">Mint</button></tr>
+
+</table>
+</div>
+
+
+
+<div  align="center">
+<h1 style="color:orangered">Transfer</h1>
+                     
+<table>
+<tr><input id="to_address" placeholder="Enter to address" type="text" /></tr>
+
+<tr><input id="trans_amount"placeholder="Enter amount to transfer" type="text" /></tr>
+
+<tr><button id="t_click" onclick="trans();">Transfer</button></tr>
+
+</table>
+
+</div>
+
+<div  align="center">
+<h1 style="color:orangered">BalanceOf</h1>
+                     
+<table >
+
+<tr><input id="address"  placeholder="Enter the address" type="text" /></tr>
+
+<tr><button id="m_click" onclick="bal();">Check</button></tr>
+
+</table>
+</div>
+
+</body>
+<script>
+web3.eth.defaultAccount = web3.eth.accounts[0];
+     var sybexcon = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "decimals",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "mint",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+]);
+
+        var sybex = sybexcon.at('0x6501e6de5e0265a6cac7ed31baa135fbf1377358');
+
+ 
+    if(web3.isConnected()) 
+ 
+      {
+  
+      
+	 console.log("Ok");
+  
+       }
+     
+else
+ 
+    {
+ 
+	   console.log("no");
+
+      }
+
+      web3.version.getNetwork((err, netId) => {
+
+            switch (netId)
+ {
+ 
+    case "1":
+  console.log('This is mainnet')
+ 
+	   break
+
+   case "2":
+  console.log('This is the deprecated Morden test network.')
+  
+	   break
+ 
+   case "3":
+  console.log('This is the ropsten test network.')
+        
+	   break
+  
+   case "4":  console.log('This is the Rinkeby test network.')
+
+                   break
+  
+   case "42":
+ console.log('This is the Kovan test network.')
+   
+                   break
+
+   default:
+  console.log('This is an unknown network.')
+         
+  }
+
+        });
+
+
+
+
+function min() 
+
+{
+
+var amt=document.getElementById('mid');
+
+return sybex.mint(amt.value,function(error,result)
+
+{
+  
+  if(!error) 
+
+  	{
+          	alert(result); 
+   	}
+	 else
+  
+	 {
+
+	 alert("ERROR");
+   
+	 }
+
+}
+);
+}
+
+
+function trans() 
+
+{
+
+var toadd=document.getElementById('to_address');
+
+var amt=document.getElementById('trans_amount');
+
+return sybex.transfer(toadd.value,amt.value,function(error,result)
+
+{
+  
+  if(!error) 
+
+  	{
+          	alert(result); 
+   	}
+	 else
+  
+	 {
+
+	 alert("ERROR");
+   
+	 }
+
+}
+);
+}
+
+
+
+function bal()
+
+{
+
+var add=document.getElementById('address');
+
+return sybex.balanceOf(add.value,function(error,result)
+  
+{
+
+ if(!error) 
+ 
+   {
+ 	 alert(result); 
+
+    }
+    else
+    {
+
+	  alert("ERROR");
+   
+    }
+
+    }
+);
+
+}
+</script>
+</html>
